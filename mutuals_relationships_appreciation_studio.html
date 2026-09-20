@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Bonds & Mutuals 💖</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Plus Jakarta Sans & Quicksand -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['Quicksand', 'sans-serif'],
+                    },
+                    colors: {
+                        pastel: {
+                            pink: '#ffd1dc',
+                            lavender: '#e6e6fa',
+                            peach: '#ffdab9',
+                            mint: '#b0e0e6',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'glow': 'glow 3s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+                            '50%': { transform: 'translateY(-15px) rotate(3deg)' },
+                        },
+                        glow: {
+                            '0%': { boxShadow: '0 0 15px rgba(244, 114, 182, 0.3)' },
+                            '100%': { boxShadow: '0 0 30px rgba(236, 72, 153, 0.7)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom glassmorphism & background effects */
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .dark .glass-card {
+            background: rgba(30, 27, 40, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .dark .glass-nav {
+            background: rgba(18, 16, 26, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(236, 72, 153, 0.3);
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(236, 72, 153, 0.6);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-100 dark:from-[#0d0b14] dark:via-[#161224] dark:to-[#120f1a] text-slate-800 dark:text-slate-100 min-h-screen relative selection:bg-pink-400 selection:text-white transition-colors duration-500">
+
+    <!-- Ambient glowing background blobs -->
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-pink-400/20 dark:bg-pink-600/15 rounded-full blur-3xl pointer-events-none animate-pulse-slow"></div>
+    <div class="fixed bottom-10 right-1/4 w-96 h-96 bg-purple-400/20 dark:bg-purple-600/15 rounded-full blur-3xl pointer-events-none animate-pulse-slow" style="animation-delay: 2s;"></div>
+    <div class="fixed top-1/2 right-10 w-80 h-80 bg-indigo-400/15 dark:bg-indigo-600/10 rounded-full blur-3xl pointer-events-none animate-pulse-slow" style="animation-delay: 4s;"></div>
+
+    <!-- Floating Hearts Container -->
+    <div id="floating-hearts" class="fixed inset-0 pointer-events-none overflow-hidden z-0"></div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 glass-nav border-b border-pink-200/30 dark:border-purple-900/30 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand / Logo -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('all')">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-pink-500 via-purple-500 to-indigo-500 flex items-center justify-center text-white shadow-lg shadow-pink-500/30 animate-float">
+                    <i class="fa-solid fa-heart-pulse text-xl"></i>
+                </div>
+                <div>
+                    <h1 id="site-title" class="font-display font-bold text-xl sm:text-2xl bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent">Our Inner Circle</h1>
+                    <p id="site-subtitle" class="text-xs text-slate-500 dark:text-slate-400">Cherished bonds & favorite humans ✨</p>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex items-center space-x-3">
+                <!-- Theme Toggle Button -->
+                <button onclick="toggleTheme()" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-slate-600 dark:text-slate-300 hover:scale-110 active:scale-95 transition-all shadow-sm hover:shadow-md" title="Toggle Light/Dark Theme">
+                    <i id="theme-icon" class="fa-solid fa-moon text-lg"></i>
+                </button>
+
+                <!-- Open Studio Customizer Button -->
+                <button onclick="openStudio()" class="flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-medium shadow-lg shadow-pink-500/25 hover:shadow-pink-500/40 hover:scale-105 active:scale-95 transition-all">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span class="hidden sm:inline">Studio Mode</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main App Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+        
+        <!-- Hero Intro Banner -->
+        <section class="text-center my-8 sm:my-12">
+            <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-pink-100/80 dark:bg-pink-950/50 border border-pink-200 dark:border-pink-900/50 text-pink-600 dark:text-pink-300 text-xs sm:text-sm font-semibold mb-4 shadow-sm animate-bounce">
+                <i class="fa-solid fa-sparkles"></i>
+                <span>Celebrating Special Connections</span>
+            </div>
+            <h2 id="hero-title" class="font-display font-extrabold text-3xl sm:text-5xl lg:text-6xl text-slate-900 dark:text-white tracking-tight mb-4">
+                People Who Make Life <span class="bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent">Magical</span>
+            </h2>
+            <p id="hero-desc" class="max-w-2xl mx-auto text-slate-600 dark:text-slate-300 text-base sm:text-lg leading-relaxed">
+                A curated digital scrapbook dedicated to my favorite souls, day-ones, besties, and dearest loves. Hover over cards to feel the love! 💌
+            </p>
+        </section>
+
+        <!-- Category Tabs Bar -->
+        <div class="flex items-center justify-between mb-8 pb-2 overflow-x-auto no-scrollbar border-b border-slate-200/60 dark:border-slate-800">
+            <div id="tabs-container" class="flex space-x-2 sm:space-x-3 min-w-max">
+                <!-- Tabs injected dynamically via JS -->
+            </div>
+            <!-- Quick Add Button in tab bar -->
+            <button onclick="openStudioAdd()" class="hidden md:flex items-center space-x-1.5 text-xs font-semibold px-3 py-2 rounded-xl bg-purple-100 dark:bg-purple-950/60 text-purple-600 dark:text-purple-300 hover:bg-purple-200 dark:hover:bg-purple-900 transition-colors">
+                <i class="fa-solid fa-plus"></i>
+                <span>Add Profile</span>
+            </button>
+        </div>
+
+        <!-- Profile Cards Grid -->
+        <div id="profiles-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            <!-- Cards will be dynamically injected here -->
+        </div>
+
+        <!-- Empty State (hidden by default) -->
+        <div id="empty-state" class="hidden text-center py-20 px-4 glass-card rounded-3xl max-w-lg mx-auto my-12 shadow-xl">
+            <div class="w-20 h-20 mx-auto mb-4 rounded-3xl bg-pink-100 dark:bg-pink-950/50 flex items-center justify-center text-pink-500 text-3xl">
+                <i class="fa-solid fa-heart-crack"></i>
+            </div>
+            <h3 class="font-display font-bold text-xl text-slate-800 dark:text-white mb-2">No Profiles Found in this Tab</h3>
+            <p class="text-slate-500 dark:text-slate-400 text-sm mb-6">You haven't added anyone to this category yet, or they were removed. Let's add your favorite people!</p>
+            <button onclick="openStudioAdd()" class="px-6 py-3 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 text-white font-medium shadow-lg shadow-pink-500/25 hover:scale-105 transition-all">
+                <i class="fa-solid fa-plus mr-2"></i> Add First Profile
+            </button>
+        </div>
+    </main>
+
+    <!-- Profile Detail Modal -->
+    <div id="profile-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
+        <div class="glass-card w-full max-w-xl rounded-3xl p-6 sm:p-8 shadow-2xl relative transform scale-95 transition-transform duration-300" id="modal-content-box">
+            <button onclick="closeModal()" class="absolute top-5 right-5 w-10 h-10 rounded-full bg-slate-200/80 dark:bg-slate-800/80 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:scale-110 transition-all">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div id="modal-body">
+                <!-- Dynamic modal content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Customizer Studio Modal -->
+    <div id="studio-modal" class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/70 backdrop-blur-md hidden opacity-0 transition-opacity duration-300 overflow-y-auto">
+        <div class="glass-card w-full max-w-4xl rounded-3xl p-6 sm:p-8 shadow-2xl relative my-8 transform scale-95 transition-transform duration-300 max-h-[90vh] overflow-y-auto">
+            
+            <!-- Studio Header -->
+            <div class="flex items-center justify-between pb-6 border-b border-slate-200 dark:border-slate-800 mb-6">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-pink-500 to-purple-600 flex items-center justify-center text-white shadow-md">
+                        <i class="fa-solid fa-gears"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-display font-bold text-xl text-slate-900 dark:text-white">Customizer Studio</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Personalize your page, tabs, and cherished connections ✨</p>
+                    </div>
+                </div>
+                <button onclick="closeStudio()" class="w-10 h-10 rounded-xl bg-slate-200/80 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:scale-110 transition-all">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Studio Tabs Navigation -->
+            <div class="flex space-x-2 border-b border-slate-200 dark:border-slate-800 mb-6 pb-2">
+                <button onclick="switchStudioTab('profiles')" id="st-tab-profiles" class="px-4 py-2 rounded-xl font-semibold text-sm bg-pink-500 text-white shadow-md transition-all">
+                    <i class="fa-solid fa-users mr-2"></i> Manage Profiles (<span id="profile-count-badge">0</span>)
+                </button>
+                <button onclick="switchStudioTab('tabs')" id="st-tab-tabs" class="px-4 py-2 rounded-xl font-semibold text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-all">
+                    <i class="fa-solid fa-folder-tree mr-2"></i> Manage Tabs
+                </button>
+                <button onclick="switchStudioTab('settings')" id="st-tab-settings" class="px-4 py-2 rounded-xl font-semibold text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-all">
+                    <i class="fa-solid fa-sliders mr-2"></i> Page Settings & Backup
+                </button>
+            </div>
+
+            <!-- Studio Tab 1: Profiles Manager -->
+            <div id="studio-content-profiles" class="space-y-6">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <h4 class="font-display font-bold text-lg text-slate-800 dark:text-white">Your Listed Profiles</h4>
+                    <button onclick="openProfileForm()" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold text-sm shadow-md hover:scale-105 transition-all">
+                        <i class="fa-solid fa-plus mr-2"></i> Add New Profile
+                    </button>
+                </div>
+
+                <!-- Profile Edit Form (Hidden by default, slides in when adding/editing) -->
+                <div id="profile-form-container" class="hidden p-6 rounded-2xl bg-pink-50/70 dark:bg-purple-950/30 border border-pink-200 dark:border-purple-900/50 space-y-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <h5 id="form-title" class="font-display font-bold text-base text-pink-600 dark:text-pink-300">Add New Mutual / Bond</h5>
+                        <button onclick="hideProfileForm()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <form id="profile-form" onsubmit="saveProfile(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <input type="hidden" id="edit-index" value="-1">
+                        
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Name / Handle *</label>
+                            <input type="text" id="p-name" required placeholder="e.g. Maya & Alex or Bestie Sarah" class="w-full px-4 py-2 rounded-xl glass-card border border-slate-300 dark:border-slate-700 focus:outline-none focus:border-pink-500 text-sm">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Category Tab *</label>
+                            <select id="p-category" required class="w-full px-4 py-2 rounded-xl glass-card border border-slate-300 dark:border-slate-700 focus:outline-none focus:border-pink-500 text-sm dark:bg-slate-900">
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Avatar / Photo URL *</label>
+                            <input type="url" id="p-avatar" required placeholder="https://images.unsplash.com/..." class="w-full px-4 py-2 rounded-xl glass-card border border-slate-300 dark:border-slate-700 focus:outline-none focus:border-pink-500 text-sm">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Relationship Tag</label>
+                            <input type="text" id="p-tag" placeholder="e.g. Soulmate, Day One, Partner in Crime" class="w-full px-4 py-2 rounded-xl glass-card border border-slate-300 dark:border-slate-700 focus:outline-none focus:border-pink-500 text-sm">
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Custom Note / Appreciation Bio *</label>
+                            <textarea id="p-note" rows="3" required placeholder="Write a sweet appreciation note about why this person is so special..." class="w-full px-4 py-2 rounded-xl glass-card border border-slate-300 dark:border-slate-700 focus:outline-none focus:border-pink-500 text-sm"></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Anniversary / Special Date (Optional)</label>
+                            <input type="date" id="p-date" class="w-full px-4 py-2 rounded-xl glass-card border border-slate-300 dark:border-slate-700 focus:outline-none focus:border-pink-500 text-sm dark:bg-slate-900">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Instagram / Social Link</label>
+                            <input type="text" id="p-social" placeholder="https://instagram.com/username" class="w-full px-4 py-2 rounded-xl glass-card border border-slate-300 dark:border-slate-700 focus:outline-none focus:border-pink-500 text-sm">
+                        </div>
+
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Spotify Track URL or Title (Optional)</label>
+                            <input type="text" id="p-spotify" placeholder="Our song: Artist - Track Name" class="w-full px-4 py-2 rounded-xl glass-card border border-slate-300 dark:border-slate-700 focus:outline-none focus:border-pink-500 text-sm">
+                        </div>
+
+                        <div class="sm:col-span-2 flex justify-end space-x-3 pt-2">
+                            <button type="button" onclick="hideProfileForm()" class="px-4 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-medium">Cancel</button>
+                            <button type="submit" class="px-6 py-2 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 text-white text-sm font-semibold shadow-md">Save Profile</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Existing Profiles List Table / Cards in Studio -->
+                <div id="studio-profiles-list" class="space-y-3 max-h-[50vh] overflow-y-auto pr-1">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Studio Tab 2: Tabs Manager -->
+            <div id="studio-content-tabs" class="space-y-6 hidden">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h4 class="font-display font-bold text-lg text-slate-800 dark:text-white">Manage Categories & Tabs</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Add custom tabs like "Bestiess", "❤️ Love", "Day One's", or anything you like!</p>
+                    </div>
+                </div>
+
+                <!-- Add Tab Form -->
+                <form onsubmit="addTab(event)" class="flex gap-3">
+                    <input type="text" id="new-tab-name" required placeholder="Tab Name (e.g. 🌸 Favorites)" class="flex-1 px-4 py-2.5 rounded-xl glass-card border border-slate-300 dark:border-slate-700 focus:outline-none focus:border-pink-500 text-sm">
+                    <button type="submit" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold text-sm shadow-md hover:scale-105 transition-all">
+                        <i class="fa-solid fa-plus mr-1"></i> Add Tab
+                    </button>
+                </form>
+
+                <!-- Tabs List -->
+                <div id="studio-tabs-list" class="space-y-2 max-h-[45vh] overflow-y-auto">
+                    <!-- Populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Studio Tab 3: Site Settings & Export/Import -->
+            <div id="studio-content-settings" class="space-y-6 hidden">
+                <h4 class="font-display font-bold text-lg text-slate-800 dark:text-white">Page Customization & Data Backup</h4>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Website Title</label>
+                        <input type="text" id="setting-title" value="Our Inner Circle" class="w-full px-4 py-2 rounded-xl glass-card border border-slate-300 dark:border-slate-700 focus:outline-none focus:border-pink-500 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Subtitle</label>
+                        <input type="text" id="setting-subtitle" value="Cherished bonds & favorite humans ✨" class="w-full px-4 py-2 rounded-xl glass-card border border-slate-300 dark:border-slate-700 focus:outline-none focus:border-pink-500 text-sm">
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-slate-200 dark:border-slate-800">
+                    <h5 class="font-display font-semibold text-sm text-slate-800 dark:text-white mb-2">Export & Share Your Data</h5>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">Export your profiles and tabs to a JSON file or copy shareable code to send to friends!</p>
+                    <div class="flex flex-wrap gap-3">
+                        <button onclick="exportData()" class="px-4 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-medium text-sm hover:bg-slate-300 dark:hover:bg-slate-700 transition-all">
+                            <i class="fa-solid fa-download mr-2"></i> Export JSON Backup
+                        </button>
+                        <button onclick="importDataPrompt()" class="px-4 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-medium text-sm hover:bg-slate-300 dark:hover:bg-slate-700 transition-all">
+                            <i class="fa-solid fa-upload mr-2"></i> Import JSON
+                        </button>
+                        <button onclick="resetToDefault()" class="px-4 py-2.5 rounded-xl bg-rose-100 dark:bg-rose-950/50 text-rose-600 dark:text-rose-300 font-medium text-sm hover:bg-rose-200 transition-all">
+                            <i class="fa-solid fa-rotate-right mr-2"></i> Reset to Default Demo
+                        </button>
+                    </div>
+                    <input type="file" id="import-file" accept=".json" class="hidden" onchange="importDataFile(event)">
+                </div>
+
+                <div class="pt-4 flex justify-end">
+                    <button onclick="saveSettings()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold text-sm shadow-md hover:scale-105 transition-all">
+                        Save Site Settings
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 glass-card px-5 py-3 rounded-2xl shadow-xl flex items-center space-x-3 border border-pink-500/30">
+        <div id="toast-icon" class="text-pink-500 text-lg">
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <span id="toast-msg" class="text-sm font-medium text-slate-800 dark:text-white">Action successful!</span>
+    </div>
+
+    <script>
+        const DEFAULT_TABS = [
+            { id: 'all', name: '✨ All Bonds', icon: 'fa-sparkles' },
+            { id: 'bestiess', name: '👯‍♀️ Bestiess', icon: 'fa-user-group' },
+            { id: 'love', name: '❤️ Love', icon: 'fa-heart' },
+            { id: 'dayones', name: "🤝 Day One's", icon: 'fa-shield-heart' }
+        ];
+
+        const DEFAULT_PROFILES = [
+            {
+                name: "Sophia & Me",
+                category: "bestiess",
+                avatar: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=800",
+                tag: "Ride or Die Besties 👯‍♀️",
+                note: "From 3 AM study sessions to spontaneous road trips, you're the sister I got to choose. Life is infinitely brighter with you in it!",
+                date: "2021-06-15",
+                social: "https://instagram.com",
+                spotify: "Taylor Swift - Long Live"
+            },
+            {
+                name: "Lucas 💖",
+                category: "love",
+                avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=800",
+                tag: "My Whole World 🌙",
+                note: "Every single day with you feels like a warm hug. Thank you for being my peace, my biggest cheerleader, and my absolute favorite person.",
+                date: "2023-02-14",
+                social: "https://instagram.com",
+                spotify: "Lauv - I Like Me Better"
+            },
+            {
+                name: "Marcus",
+                category: "dayones",
+                avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800",
+                tag: "Day One Homie 🛡️",
+                note: "We've been through middle school awkwardness, high school chaos, and everything beyond. No matter how much time passes, nothing changes.",
+                date: "2018-09-01",
+                social: "https://instagram.com",
+                spotify: "Drake - One Dance"
+            },
+            {
+                name: "Chloe & Group",
+                category: "bestiess",
+                avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=800",
+                tag: "Chaotic Energy ✨",
+                note: "The group chat that never sleeps and always knows the exact right meme to send. Wouldn't trade our silly voice notes for anything.",
+                date: "2022-04-10",
+                social: "https://instagram.com",
+                spotify: "ABBA - Dancing Queen"
+            }
+        ];
+
+        // App State
+        let appData = {
+            title: "Our Inner Circle",
+            subtitle: "Cherished bonds & favorite humans ✨",
+            tabs: JSON.parse(localStorage.getItem('reddos_tabs')) || DEFAULT_TABS,
+            profiles: JSON.parse(localStorage.getItem('reddos_profiles')) || DEFAULT_PROFILES
+        };
+
+        let currentActiveTab = 'all';
+
+        // Initialize App on load
+        window.onload = function() {
+            initTheme();
+            renderTabs();
+            renderProfiles();
+            initFloatingHearts();
+            updateStudioBadge();
+        };
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-icon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.setItem('reddos_theme', 'light');
+                icon.className = 'fa-solid fa-moon text-lg';
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('reddos_theme', 'dark');
+                icon.className = 'fa-solid fa-sun text-lg';
+            }
+        }
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('reddos_theme');
+            const icon = document.getElementById('theme-icon');
+            if (savedTheme === 'light') {
+                document.documentElement.classList.remove('dark');
+                icon.className = 'fa-solid fa-moon text-lg';
+            } else {
+                document.documentElement.classList.add('dark');
+                icon.className = 'fa-solid fa-sun text-lg';
+            }
+        }
+
+        function initFloatingHearts() {
+            const container = document.getElementById('floating-hearts');
+            const heartIcons = ['fa-heart', 'fa-sparkles', 'fa-star', 'fa-seedling'];
+            
+            for (let i = 0; i < 15; i++) {
+                const el = document.createElement('div');
+                el.className = 'absolute text-pink-400/20 dark:text-pink-500/15 animate-float';
+                el.style.left = `${Math.random() * 100}%`;
+                el.style.top = `${Math.random() * 100}%`;
+                el.style.fontSize = `${Math.random() * 1.5 + 0.8}rem`;
+                el.style.animationDuration = `${Math.random() * 6 + 4}s`;
+                el.style.animationDelay = `${Math.random() * 5}s`;
+                
+                const iconClass = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+                el.innerHTML = `<i class="fa-solid ${iconClass}"></i>`;
+                container.appendChild(el);
+            }
+        }
+
+        function renderTabs() {
+            const container = document.getElementById('tabs-container');
+            const selectContainer = document.getElementById('p-category');
+            
+            // Render main page tabs
+            container.innerHTML = appData.tabs.map(tab => {
+                const isActive = currentActiveTab === tab.id;
+                const count = tab.id === 'all' ? appData.profiles.length : appData.profiles.filter(p => p.category === tab.id).length;
+                return `
+                    <button onclick="switchTab('${tab.id}')" class="flex items-center space-x-2 px-4 py-2.5 rounded-2xl font-semibold text-sm transition-all duration-300 ${
+                        isActive 
+                            ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-lg shadow-pink-500/30 scale-105' 
+                            : 'glass-card text-slate-600 dark:text-slate-300 hover:bg-pink-100/50 dark:hover:bg-purple-900/30'
+                    }">
+                        <i class="fa-solid ${tab.icon || 'fa-heart'}"></i>
+                        <span>${tab.name}</span>
+                        <span class="ml-1 px-1.5 py-0.5 rounded-full text-xs ${isActive ? 'bg-white/20 text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-500'}">${count}</span>
+                    </button>
+                `;
+            }).join('');
+
+            // Render select dropdown in profile form
+            selectContainer.innerHTML = appData.tabs.filter(t => t.id !== 'all').map(tab => `
+                <option value="${tab.id}">${tab.name}</option>
+            `).join('');
+
+            // Update title
+            document.getElementById('site-title').innerText = appData.title;
+            document.getElementById('site-subtitle').innerText = appData.subtitle;
+            document.getElementById('setting-title').value = appData.title;
+            document.getElementById('setting-subtitle').value = appData.subtitle;
+        }
+
+        function switchTab(tabId) {
+            currentActiveTab = tabId;
+            renderTabs();
+            renderProfiles();
+        }
+
+        function renderProfiles() {
+            const grid = document.getElementById('profiles-grid');
+            const emptyState = document.getElementById('empty-state');
+            
+            const filtered = currentActiveTab === 'all' 
+                ? appData.profiles 
+                : appData.profiles.filter(p => p.category === currentActiveTab);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            grid.innerHTML = filtered.map((profile, idx) => {
+                // Calculate days together if date exists
+                let daysTogetherHTML = '';
+                if (profile.date) {
+                    const start = new Date(profile.date);
+                    const now = new Date();
+                    const diffTime = Math.abs(now - start);
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    daysTogetherHTML = `
+                        <div class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-pink-100/80 dark:bg-pink-950/50 text-pink-600 dark:text-pink-300 text-xs font-semibold">
+                            <i class="fa-solid fa-calendar-heart"></i>
+                            <span>${diffDays} Days Together</span>
+                        </div>
+                    `;
+                }
+
+                return `
+                    <div class="glass-card rounded-3xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group relative overflow-hidden border border-white/40 dark:border-white/10">
+                        <!-- Background glow effect on hover -->
+                        <div class="absolute -right-16 -top-16 w-32 h-32 bg-pink-400/20 rounded-full blur-2xl group-hover:bg-pink-400/40 transition-all pointer-events-none"></div>
+
+                        <div>
+                            <!-- Top Header: Avatar & Tag -->
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="relative">
+                                    <img src="${profile.avatar}" alt="${profile.name}" class="w-20 h-20 rounded-2xl object-cover shadow-md group-hover:scale-105 transition-transform duration-300 border-2 border-white dark:border-slate-800" onerror="this.src='https://placehold.co/200x200/ffd1dc/db2777?text=💕'">
+                                    <div class="absolute -bottom-2 -right-2 w-7 h-7 rounded-full bg-gradient-to-tr from-pink-500 to-purple-600 text-white flex items-center justify-center text-xs shadow-md">
+                                        <i class="fa-solid fa-heart"></i>
+                                    </div>
+                                </div>
+                                ${profile.tag ? `<span class="px-3 py-1 rounded-xl bg-purple-100 dark:bg-purple-950/60 text-purple-600 dark:text-purple-300 text-xs font-semibold shadow-sm">${profile.tag}</span>` : ''}
+                            </div>
+
+                            <!-- Name -->
+                            <h3 class="font-display font-bold text-xl text-slate-900 dark:text-white mb-2 group-hover:text-pink-500 transition-colors">${profile.name}</h3>
+
+                            <!-- Note preview -->
+                            <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4 line-clamp-3">"${profile.note}"</p>
+                        </div>
+
+                        <div>
+                            <!-- Extra badges: Days & Spotify -->
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                ${daysTogetherHTML}
+                                ${profile.spotify ? `
+                                    <div class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-100/80 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-300 text-xs font-semibold">
+                                        <i class="fa-brands fa-spotify"></i>
+                                        <span class="truncate max-w-[140px]">${profile.spotify}</span>
+                                    </div>
+                                ` : ''}
+                            </div>
+
+                            <!-- Card Footer Actions -->
+                            <div class="flex items-center justify-between pt-4 border-t border-slate-200/60 dark:border-slate-800">
+                                <div class="flex space-x-2">
+                                    ${profile.social ? `
+                                        <a href="${profile.social}" target="_blank" class="w-9 h-9 rounded-xl glass-card flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-pink-500 hover:text-white transition-all shadow-sm" title="Social Link">
+                                            <i class="fa-brands fa-instagram text-sm"></i>
+                                        </a>
+                                    ` : ''}
+                                </div>
+                                <button onclick="openProfileModal('${profile.name.replace(/'/g, "\\'")}')" class="px-4 py-2 rounded-xl bg-pink-100 dark:bg-pink-950/50 text-pink-600 dark:text-pink-300 hover:bg-pink-500 hover:text-white text-xs font-semibold transition-all shadow-sm flex items-center space-x-1.5">
+                                    <span>View Story</span>
+                                    <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openProfileModal(name) {
+            const profile = appData.profiles.find(p => p.name === name);
+            if (!profile) return;
+
+            let daysTogetherStr = '';
+            if (profile.date) {
+                const start = new Date(profile.date);
+                const now = new Date();
+                const diffTime = Math.abs(now - start);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                daysTogetherStr = `${diffDays} Days of Cherished Memories ✨`;
+            }
+
+            const modalBody = document.getElementById('modal-body');
+            modalBody.innerHTML = `
+                <div class="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6 mb-6">
+                    <img src="${profile.avatar}" alt="${profile.name}" class="w-28 h-28 rounded-3xl object-cover shadow-xl border-4 border-white dark:border-slate-800" onerror="this.src='https://placehold.co/200x200/ffd1dc/db2777?text=💕'">
+                    <div class="text-center sm:text-left">
+                        ${profile.tag ? `<span class="inline-block px-3 py-1 rounded-xl bg-purple-100 dark:bg-purple-950/60 text-purple-600 dark:text-purple-300 text-xs font-semibold mb-2 shadow-sm">${profile.tag}</span>` : ''}
+                        <h3 class="font-display font-extrabold text-2xl text-slate-900 dark:text-white mb-1">${profile.name}</h3>
+                        ${daysTogetherStr ? `<p class="text-xs font-medium text-pink-500 dark:text-pink-400"><i class="fa-solid fa-heart mr-1"></i> ${daysTogetherStr}</p>` : ''}
+                    </div>
+                </div>
+
+                <div class="p-5 rounded-2xl bg-pink-50/60 dark:bg-purple-950/30 border border-pink-200 dark:border-purple-900/40 mb-6">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-pink-500 mb-2"><i class="fa-solid fa-quote-left mr-1"></i> Appreciation Note</h4>
+                    <p class="text-slate-700 dark:text-slate-200 text-base leading-relaxed italic">"${profile.note}"</p>
+                </div>
+
+                <div class="flex flex-wrap gap-4 items-center justify-between pt-2">
+                    <div class="flex space-x-3">
+                        ${profile.social ? `
+                            <a href="${profile.social}" target="_blank" class="px-4 py-2 rounded-xl glass-card flex items-center space-x-2 text-slate-700 dark:text-slate-200 hover:bg-pink-500 hover:text-white transition-all text-sm font-medium shadow-sm">
+                                <i class="fa-brands fa-instagram"></i>
+                                <span>Instagram Profile</span>
+                            </a>
+                        ` : ''}
+                        ${profile.spotify ? `
+                            <div class="px-4 py-2 rounded-xl bg-emerald-100/80 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 flex items-center space-x-2 text-sm font-medium">
+                                <i class="fa-brands fa-spotify"></i>
+                                <span>${profile.spotify}</span>
+                            </div>
+                        ` : ''}
+                    </div>
+                    <button onclick="closeModal()" class="px-6 py-2 rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold text-sm shadow-md">
+                        Close
+                    </button>
+                </div>
+            `;
+
+            const modal = document.getElementById('profile-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('#modal-content-box').classList.remove('scale-95');
+                modal.querySelector('#modal-content-box').classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('profile-modal');
+            modal.classList.add('opacity-0');
+            modal.querySelector('#modal-content-box').classList.remove('scale-100');
+            modal.querySelector('#modal-content-box').classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function openStudio() {
+            const modal = document.getElementById('studio-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('div').classList.remove('scale-95');
+                modal.querySelector('div').classList.add('scale-100');
+            }, 10);
+            renderStudioProfilesList();
+            renderStudioTabsList();
+            updateStudioBadge();
+        }
+
+        function closeStudio() {
+            const modal = document.getElementById('studio-modal');
+            modal.classList.add('opacity-0');
+            modal.querySelector('div').classList.remove('scale-100');
+            modal.querySelector('div').classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                hideProfileForm();
+            }, 300);
+        }
+
+        function switchStudioTab(tab) {
+            const btnProfiles = document.getElementById('st-tab-profiles');
+            const btnTabs = document.getElementById('st-tab-tabs');
+            const btnSettings = document.getElementById('st-tab-settings');
+
+            const contentProfiles = document.getElementById('studio-content-profiles');
+            const contentTabs = document.getElementById('studio-content-tabs');
+            const contentSettings = document.getElementById('studio-content-settings');
+
+            // Reset all
+            [btnProfiles, btnTabs, btnSettings].forEach(b => {
+                b.className = 'px-4 py-2 rounded-xl font-semibold text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-all';
+            });
+            [contentProfiles, contentTabs, contentSettings].forEach(c => c.classList.add('hidden'));
+
+            if (tab === 'profiles') {
+                btnProfiles.className = 'px-4 py-2 rounded-xl font-semibold text-sm bg-pink-500 text-white shadow-md transition-all';
+                contentProfiles.classList.remove('hidden');
+                renderStudioProfilesList();
+            } else if (tab === 'tabs') {
+                btnTabs.className = 'px-4 py-2 rounded-xl font-semibold text-sm bg-pink-500 text-white shadow-md transition-all';
+                contentTabs.classList.remove('hidden');
+                renderStudioTabsList();
+            } else if (tab === 'settings') {
+                btnSettings.className = 'px-4 py-2 rounded-xl font-semibold text-sm bg-pink-500 text-white shadow-md transition-all';
+                contentSettings.classList.remove('hidden');
+            }
+        }
+
+        function updateStudioBadge() {
+            document.getElementById('profile-count-badge').innerText = appData.profiles.length;
+        }
+
+        function openStudioAdd() {
+            openStudio();
+            switchStudioTab('profiles');
+            openProfileForm();
+        }
+
+        function openProfileForm(index = -1) {
+            const container = document.getElementById('profile-form-container');
+            container.classList.remove('hidden');
+            
+            // Populate select categories
+            const selectContainer = document.getElementById('p-category');
+            selectContainer.innerHTML = appData.tabs.filter(t => t.id !== 'all').map(tab => `
+                <option value="${tab.id}">${tab.name}</option>
+            `).join('');
+
+            if (index >= 0) {
+                document.getElementById('form-title').innerText = 'Edit Profile';
+                document.getElementById('edit-index').value = index;
+                const p = appData.profiles[index];
+                document.getElementById('p-name').value = p.name;
+                document.getElementById('p-category').value = p.category;
+                document.getElementById('p-avatar').value = p.avatar;
+                document.getElementById('p-tag').value = p.tag || '';
+                document.getElementById('p-note').value = p.note;
+                document.getElementById('p-date').value = p.date || '';
+                document.getElementById('p-social').value = p.social || '';
+                document.getElementById('p-spotify').value = p.spotify || '';
+            } else {
+                document.getElementById('form-title').innerText = 'Add New Mutual / Bond';
+                document.getElementById('edit-index').value = -1;
+                document.getElementById('profile-form').reset();
+            }
+        }
+
+        function hideProfileForm() {
+            document.getElementById('profile-form-container').classList.add('hidden');
+            document.getElementById('profile-form').reset();
+        }
+
+        function saveProfile(e) {
+            e.preventDefault();
+            const index = parseInt(document.getElementById('edit-index').value);
+            const profileObj = {
+                name: document.getElementById('p-name').value,
+                category: document.getElementById('p-category').value,
+                avatar: document.getElementById('p-avatar').value,
+                tag: document.getElementById('p-tag').value,
+                note: document.getElementById('p-note').value,
+                date: document.getElementById('p-date').value,
+                social: document.getElementById('p-social').value,
+                spotify: document.getElementById('p-spotify').value
+            };
+
+            if (index >= 0) {
+                appData.profiles[index] = profileObj;
+                showToast('Profile updated successfully! ✨');
+            } else {
+                appData.profiles.push(profileObj);
+                showToast('New profile added with love! 💖');
+            }
+
+            persistData();
+            hideProfileForm();
+            renderStudioProfilesList();
+            renderTabs();
+            renderProfiles();
+            updateStudioBadge();
+        }
+
+        function deleteProfile(index) {
+            if (confirm('Are you sure you want to remove this profile?')) {
+                appData.profiles.splice(index, 1);
+                persistData();
+                renderStudioProfilesList();
+                renderTabs();
+                renderProfiles();
+                updateStudioBadge();
+                showToast('Profile removed.');
+            }
+        }
+
+        function renderStudioProfilesList() {
+            const list = document.getElementById('studio-profiles-list');
+            if (appData.profiles.length === 0) {
+                list.innerHTML = `<p class="text-sm text-slate-500 text-center py-4">No profiles added yet.</p>`;
+                return;
+            }
+
+            list.innerHTML = appData.profiles.map((p, idx) => {
+                const tabObj = appData.tabs.find(t => t.id === p.category);
+                const tabName = tabObj ? tabObj.name : p.category;
+                return `
+                    <div class="flex items-center justify-between p-3 rounded-2xl glass-card border border-slate-200/60 dark:border-slate-800">
+                        <div class="flex items-center space-x-3">
+                            <img src="${p.avatar}" alt="${p.name}" class="w-12 h-12 rounded-xl object-cover shadow-sm" onerror="this.src='https://placehold.co/100x100/ffd1dc/db2777?text=💕'">
+                            <div>
+                                <h5 class="font-display font-bold text-sm text-slate-900 dark:text-white">${p.name}</h5>
+                                <span class="text-xs px-2 py-0.5 rounded-md bg-purple-100 dark:bg-purple-950/50 text-purple-600 dark:text-purple-300 font-medium">${tabName}</span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="openProfileForm(${idx})" class="w-9 h-9 rounded-xl bg-slate-200/80 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-pink-500 hover:text-white transition-all" title="Edit">
+                                <i class="fa-solid fa-pen text-xs"></i>
+                            </button>
+                            <button onclick="deleteProfile(${idx})" class="w-9 h-9 rounded-xl bg-rose-100 dark:bg-rose-950/50 flex items-center justify-center text-rose-600 hover:bg-rose-500 hover:text-white transition-all" title="Delete">
+                                <i class="fa-solid fa-trash text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function addTab(e) {
+            e.preventDefault();
+            const nameInput = document.getElementById('new-tab-name');
+            const name = nameInput.value.trim();
+            if (!name) return;
+
+            const id = name.toLowerCase().replace(/[^a-z0-9]/g, '');
+            if (appData.tabs.some(t => t.id === id)) {
+                showToast('A tab with this name already exists!');
+                return;
+            }
+
+            appData.tabs.push({ id, name, icon: 'fa-heart' });
+            persistData();
+            nameInput.value = '';
+            renderStudioTabsList();
+            renderTabs();
+            showToast('New tab category created! ✨');
+        }
+
+        function deleteTab(id) {
+            if (id === 'all') {
+                showToast('Cannot delete the All tab.');
+                return;
+            }
+            if (confirm('Deleting this tab will also delete profiles in this category. Continue?')) {
+                appData.tabs = appData.tabs.filter(t => t.id !== id);
+                appData.profiles = appData.profiles.filter(p => p.category !== id);
+                if (currentActiveTab === id) currentActiveTab = 'all';
+                persistData();
+                renderStudioTabsList();
+                renderTabs();
+                renderProfiles();
+                updateStudioBadge();
+                showToast('Tab deleted.');
+            }
+        }
+
+        function renderStudioTabsList() {
+            const list = document.getElementById('studio-tabs-list');
+            list.innerHTML = appData.tabs.map(tab => {
+                const count = tab.id === 'all' ? appData.profiles.length : appData.profiles.filter(p => p.category === tab.id).length;
+                const isDefault = tab.id === 'all';
+                return `
+                    <div class="flex items-center justify-between p-3 rounded-2xl glass-card border border-slate-200/60 dark:border-slate-800">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-9 h-9 rounded-xl bg-pink-100 dark:bg-pink-950/50 flex items-center justify-center text-pink-500">
+                                <i class="fa-solid ${tab.icon || 'fa-heart'} text-sm"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-display font-bold text-sm text-slate-900 dark:text-white">${tab.name}</h5>
+                                <span class="text-xs text-slate-500">${count} profiles</span>
+                            </div>
+                        </div>
+                        <div>
+                            ${!isDefault ? `
+                                <button onclick="deleteTab('${tab.id}')" class="w-9 h-9 rounded-xl bg-rose-100 dark:bg-rose-950/50 flex items-center justify-center text-rose-600 hover:bg-rose-500 hover:text-white transition-all" title="Delete Tab">
+                                    <i class="fa-solid fa-trash text-xs"></i>
+                                </button>
+                            ` : `<span class="text-xs font-semibold px-3 py-1 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-500">Default</span>`}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function saveSettings() {
+            appData.title = document.getElementById('setting-title').value || "Our Inner Circle";
+            appData.subtitle = document.getElementById('setting-subtitle').value || "Cherished bonds & favorite humans ✨";
+            persistData();
+            renderTabs();
+            showToast('Site settings saved successfully! 💖');
+        }
+
+        function persistData() {
+            localStorage.setItem('reddos_tabs', JSON.stringify(appData.tabs));
+            localStorage.setItem('reddos_profiles', JSON.stringify(appData.profiles));
+        }
+
+        function exportData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appData, null, 2));
+            const dlAnchor = document.createElement('a');
+            dlAnchor.setAttribute("href", dataStr);
+            dlAnchor.setAttribute("download", "reddos_mutuals_backup.json");
+            document.body.appendChild(dlAnchor);
+            dlAnchor.click();
+            dlAnchor.remove();
+            showToast('JSON backup downloaded! 📂');
+        }
+
+        function importDataPrompt() {
+            document.getElementById('import-file').click();
+        }
+
+        function importDataFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    if (parsed.tabs && parsed.profiles) {
+                        appData = parsed;
+                        persistData();
+                        renderTabs();
+                        renderProfiles();
+                        renderStudioProfilesList();
+                        renderStudioTabsList();
+                        updateStudioBadge();
+                        showToast('Data imported successfully! ✨');
+                    } else {
+                        showToast('Invalid backup file format.');
+                    }
+                } catch (err) {
+                    showToast('Error parsing JSON file.');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function resetToDefault() {
+            if (confirm('Reset everything back to default demo profiles and tabs?')) {
+                appData.tabs = DEFAULT_TABS;
+                appData.profiles = DEFAULT_PROFILES;
+                appData.title = "Our Inner Circle";
+                appData.subtitle = "Cherished bonds & favorite humans ✨";
+                persistData();
+                renderTabs();
+                renderProfiles();
+                renderStudioProfilesList();
+                renderStudioTabsList();
+                updateStudioBadge();
+                showToast('Reset to default demo.');
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
